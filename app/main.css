@@ -99,6 +99,11 @@ body {
 .player-card .player-score-r .projected-score {
   color: #c8c8c8;
 }
+.player-card .player-score .quarter,
+.player-card .player-score-r .quarter {
+  color: orange;
+  padding-top: 2px;
+}
 .player-card .player-name {
   font-size: 1.1em;
   font-weight: bold;
@@ -187,6 +192,7 @@ body {
   font-size: 1.3em;
   padding-right: 10px;
   line-height: 38px;
+  padding-left: 20px;
 }
 .league .league-game .logo {
   float: left;
@@ -196,9 +202,69 @@ body {
   font-size: 1.1em;
   font-weight: bold;
   margin-left: 45px;
-  line-height: 20px;
 }
 .league .league-game .remaining {
   margin-left: 45px;
   color: #c8c8c8;
+  font-size: 0.8em;
+}
+.league .teamlogo {
+  background-image: url(images/team-logos.png);
+  background-repeat: no-repeat;
+  width: 38px;
+  height: 38px;
+}
+.league .teamlogo-car {
+  background-position: -207px -12px;
+}
+.league .teamlogo-ess {
+  background-position: -383px -12px;
+}
+.league .teamlogo-col {
+  background-position: -298px -12px;
+}
+.league .teamlogo-ade {
+  background-position: -28px -12px;
+}
+.league .teamlogo-brl {
+  background-position: -118px -12px;
+}
+.league .teamlogo-fre {
+  background-position: -478px -12px;
+}
+.league .teamlogo-gee {
+  background-position: -568px -12px;
+}
+.league .teamlogo-gcs {
+  background-position: -655px -12px;
+}
+.league .teamlogo-gws {
+  background-position: -752px -12px;
+}
+.league .teamlogo-haw {
+  background-position: -839px -12px;
+}
+.league .teamlogo-mel {
+  background-position: -928px -12px;
+}
+.league .teamlogo-nth {
+  background-position: -1017px -12px;
+}
+.league .teamlogo-pta {
+  background-position: -1106px -12px;
+}
+.league .teamlogo-ric {
+  background-position: -1197px -12px;
+}
+.league .teamlogo-stk {
+  background-position: -1287px -12px;
+}
+.league .teamlogo-syd {
+  background-position: -1381px -12px;
+}
+.league .teamlogo-wce {
+  background-position: -1469px -12px;
+}
+.league .teamlogo-wbd {
+  background-position: -1557px -12px;
 }

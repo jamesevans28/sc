@@ -218,6 +218,46 @@ angular.module("supercoach")
         return null;
     }
 
+
+    $scope.getTop5Scores = function(players)
+    {
+    	if(players[0].team_played_status=='pre') return;
+
+    	if(players[0].team_played_status=='now') return "Game In Progress (" + $scope.getCurrentQuarter(players[0].team) + ")";
+
+    	
+    	player_array = [];
+    	for(var i in players){
+    		player = Array();
+    		player.name = players[i].fi + ". " + players[i].ln;
+    		player.points= parseInt(players[i].livepts);
+    		player_array.push(player);
+    	}
+
+    	ordered = _.orderBy(player_array, 'points','desc');
+    	//ordered = player_array.sort(points);
+
+    	str = "";
+    	for(var k in ordered)
+    	{
+    		if(k==5) return str;
+
+    		str = str + ordered[k].name + " " + ordered[k].points + " ";
+    	}
+    }
+
+
+    $scope.getCurrentQuarter = function(player_team)
+    {
+    	for (var k in $scope.data.fixture.games)
+    	{
+    		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
+    			if($scope.data.fixture.games[k].period_status == 'Half time') return 'HT';
+    			else
+    				return 'Q'+$scope.data.fixture.games[k].period;
+    		}
+    	}
+    }
 	
 	  
 	
