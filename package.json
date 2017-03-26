@@ -1,0 +1,10 @@
+{
+  "name": "my-awesome-package",
+  "version": "1.0.0",
+  "devDependencies": {
+    "add-stream": "^1.0.0",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.3.0"
+  }
+}

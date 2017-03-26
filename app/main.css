@@ -1,0 +1,204 @@
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 0.7em;
+  padding: 0;
+  margin: 0;
+  background-color: #efefef;
+}
+#parent {
+  width: 100%;
+}
+.header {
+  background-color: #333;
+  color: #efefef;
+  line-height: 45px;
+  font-size: 1.2em;
+}
+.header i {
+  padding: 3px 8px;
+}
+
+.shirt {
+  width: 38px;
+  height: 38px;
+  position: relative;
+  display: block;
+  background-color: black;
+}
+.team-totals {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+.team-totals td {
+  width: 50%;
+}
+.team-card {
+  padding: 3px;
+  background-color: white;
+  height: 71px;
+}
+.team-card .team-total-score {
+  float: right;
+  text-align: right;
+}
+.team-card .team-total-score .actual {
+  font-size: 1.8em;
+}
+.team-card .team-total-score .projected {
+  font-size: 1.2em;
+  color: #c8c8c8;
+}
+.team-card .team-name {
+  font-size: 1.1em;
+}
+.team-card .team-record {
+  color: #c8c8c8;
+}
+.players-table {
+  width: 100%;
+}
+.players-table .table-players {
+  width: 48%;
+}
+.position-label {
+  line-height: 40px;
+  color: #c8c8c8;
+  font-size: 0.8em;
+}
+.position-label,
+.player-card {
+  height: 57px;
+  margin-bottom: 3px;
+  padding: 3px;
+}
+.player-card-r {
+  text-align: right;
+}
+.player-card {
+  clear: both;
+  background-color: white;
+}
+.player-card .player-score {
+  float: right;
+}
+.player-card .player-score-r {
+  float: left;
+}
+.player-card .player-score,
+.player-card .player-score-r {
+  width: 30px;
+  text-align: center;
+}
+.player-card .player-score .actual-score,
+.player-card .player-score-r .actual-score {
+  color: #f938ab;
+  font-size: 1.3em;
+}
+.player-card .player-score .projected-score,
+.player-card .player-score-r .projected-score {
+  color: #c8c8c8;
+}
+.player-card .player-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.player-card .player-name .player-status-inj {
+  color: red;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+.player-card .player-name .player-status-playing {
+  color: green;
+  font-size: 0.9em;
+  font-weight: normal;
+}
+.not-played {
+  border-right: 3px solid #a6a6a6;
+}
+.playing {
+  border-right: 3px solid orange;
+}
+.finished {
+  border-right: 3px solid green;
+}
+.not-played-r {
+  border-left: 3px solid #a6a6a6;
+}
+.playing-r {
+  border-left: 3px solid orange;
+}
+.finished-r {
+  border-left: 3px solid green;
+}
+.game-info,
+.stat-info {
+  color: #c8c8c8;
+  font-size: 0.9em;
+  margin-top: 2px;
+}
+.team-table {
+  width: 50%;
+}
+.team-table td {
+  padding: 4px;
+  font-size: 0.75em;
+}
+.team-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.table-divider {
+  height: 1px;
+  background-color: grey;
+}
+.player-DEF {
+  background-color: blue;
+}
+.player-RUC {
+  background-color: red;
+}
+.player-FWD {
+  background-color: green;
+}
+.player-MID {
+  background-color: orange;
+}
+.bench-label {
+  color: #7c7c7c;
+}
+.bench-label table {
+  width: 100%;
+}
+
+.league .open-close {
+  text-align: center;
+}
+.league .league-game {
+  margin-bottom: 5px;
+  width: 100%;
+  background-color: white;
+}
+.league .league-game .league-game-team {
+  height: 38px;
+}
+.league .league-game .league-game-score {
+  float: right;
+  font-size: 1.3em;
+  padding-right: 10px;
+  line-height: 38px;
+}
+.league .league-game .logo {
+  float: left;
+  margin-left: 1px;
+}
+.league .league-game .name {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-left: 45px;
+  line-height: 20px;
+}
+.league .league-game .remaining {
+  margin-left: 45px;
+  color: #c8c8c8;
+}

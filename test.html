@@ -1,0 +1,33 @@
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<div id="target"></div>
+
+<script>
+
+
+$(document).ready(function() {
+
+  $('#target').load(
+    'http://chubnas.myqnapcloud.com/proxy.php', {
+        csurl: 'http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update?opponent_id=&round=1/',
+    }
+)
+
+  $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+    if (options.url.match(/^https?:/)) {
+        options.headers['X-Proxy-URL'] = options.url;
+        options.url = '/proxy.php';
+    }
+
+   
+});
+
+});
+
+
+
+
+	</script>

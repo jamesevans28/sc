@@ -1,0 +1,214 @@
+@darkgrey: #f938ab;
+@lightgrey: #c8c8c8;
+
+
+// .league{
+// 	margin: 5px 0;
+// 	height: 55px;
+// 	.league-team-name{
+// 		height: 100%;
+// 		float:left;
+// 		font-size: 0.7em;
+// 		text-align: center;
+// 		overflow:hidden;
+// 		overflow-wrap: break-word;
+//   		word-wrap: break-word;
+//   		padding: 1px;
+//   		&:not(:last-child){
+//   			border-right: 1px solid grey;
+//   		}
+// 	}
+
+// 	.league-team-v{
+// 		text-align: center;
+// 	}
+// }
+
+.shirt {
+    width: 38px;
+    height: 38px;
+    position: relative;
+    display: block;
+    background-color: black;
+}
+
+.team-totals{
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width:100%;
+	td{	
+		width:50%;
+	}
+}
+
+.team-card{
+	padding: 3px;
+	background-color: white;
+	height: 71px;
+	.team-total-score{
+		float:right;
+		text-align: right;
+		.actual{
+			font-size: 1.8em;
+		}
+		.projected{
+			font-size: 1.2em;
+			color: @lightgrey;
+		}
+	}
+	.team-name{
+		font-size: 1.1em;
+	}
+
+	.team-record{
+		color: @lightgrey;
+	}
+}
+
+
+.players-table{
+	width:100%;
+
+	.table-players{
+		width:48%;
+	}
+}
+
+.position-label{
+	line-height:40px;
+	color: @lightgrey;
+	font-size: 0.8em;
+}
+
+.position-label, .player-card{
+	height: 57px;
+	margin-bottom: 3px;
+	padding: 3px;
+}
+
+
+.player-card-r{
+	text-align: right;
+}
+.player-card{
+	
+	
+
+	clear:both;
+	
+	
+	background-color: white;
+
+	.player-score{
+		float:right;
+	}
+
+	.player-score-r{
+		float:left;
+	}
+
+
+	.player-score, .player-score-r{
+		width: 30px;
+		
+		text-align: center;
+		.actual-score{
+			color: @darkgrey;
+			font-size: 1.3em;
+		}
+		.projected-score{
+			color: @lightgrey;
+		}
+	}
+
+	.player-name{
+		font-size: 1.1em;
+		font-weight:bold;
+		.player-status-inj{
+			color: red;
+			font-size: 0.8em;
+			font-weight:normal;
+		}
+		.player-status-playing{
+			color: green;
+			font-size: 0.9em;
+			font-weight:normal;
+		}
+	}
+
+}
+
+.not-played{
+	border-right: 3px solid lighten(grey,15%);
+}
+
+.playing{
+	border-right: 3px solid orange;
+}
+
+.finished{
+	border-right: 3px solid green;
+}
+
+.not-played-r{
+	border-left: 3px solid lighten(grey,15%);
+}
+
+.playing-r{
+	border-left: 3px solid orange;
+}
+
+.finished-r{
+	border-left: 3px solid green;
+}
+
+.game-info, .stat-info{
+	color: @lightgrey;
+	font-size: 0.9em;
+	margin-top: 2px;
+}
+
+
+
+
+.team-table{
+	width:50%;
+	td{
+		padding: 4px;
+		font-size: 0.75em;
+	}
+}
+
+.team-name{
+	font-size: 1.1em;
+	font-weight:bold;
+}
+
+.table-divider{
+	height: 1px;
+	background-color: grey;
+}
+
+.player-DEF{
+	background-color: blue;
+}
+
+.player-RUC{
+	background-color: red;
+}
+
+.player-FWD{
+	background-color: green;
+}
+
+.player-MID{
+	background-color: orange;
+}
+
+.bench-label{
+	color:darken(@lightgrey,30%);
+
+	table{
+		width:100%;
+	}
+}
