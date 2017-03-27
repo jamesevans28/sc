@@ -5,7 +5,16 @@ angular.module("supercoach",['ngRoute','templates'])
    'self',
    // Allow loading from our assets domain.  Notice the difference between * and **.
    'http://supercoach.heraldsun.com.au/**']);
- });
+ })
+.run(function ($rootScope, $window, $location) {
+
+  $window.ga('create', 'UA-96202267-1', 'auto');
+
+   $rootScope.$on('$routeChangeSuccess', function (event) {
+      $window.ga('send', 'pageview', $location.path());
+   });
+
+});
 
 /**
 * Empty module to hold all template files
