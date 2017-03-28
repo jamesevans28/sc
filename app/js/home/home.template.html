@@ -15,6 +15,8 @@ SC James Style
 		</div></div> -->
 <div id="menu" style="display:none; clear:left">
 
+
+<!-- GAMES IN MY SC LEAGUE -->
 <div class="league" style="clear:left">
 	<div class="league-game" ng-repeat="game in data.schedule.games"  ng-click="getData(game.team_1.team_id); toggleMenu();">
 
@@ -52,6 +54,8 @@ SC James Style
 	</div>
 </div>
 
+
+<!-- AFL GAMES -->
 <div class="league" style="clear:left">
 	<div class="league-game" ng-repeat="game in data.fixture.games"  ng-click="toggleMenu();">
 
@@ -88,12 +92,13 @@ SC James Style
 
 </div>
 
+<!-- TEAM TOTALS BANNER -->
 <table class="team-totals">
 	<tr>
 		<td>
 			<div class="team-card">
 			<div class="team-total-score">
-				<div class="actual">{{getTotalLiveScore(data.myplayers)}}</div>
+				<div class="actual">{{getTotalLiveScore(data.myplayers, data.mybench)}}</div>
 				<div class="projected">{{data.team.team_total_proj_points}}</div>
 
 			</div>
@@ -111,7 +116,7 @@ SC James Style
 		<td>
 			<div class="team-card" style="text-align: right;">
 				<div class="team-total-score" style="float:left">
-					<div class="actual" style="text-align: left">{{getTotalLiveScore(data.opponent.player_list.field.players)}}</div>
+					<div class="actual" style="text-align: left">{{getTotalLiveScore(data.opponent.player_list.field.players, data.opponent.player_list.bench.players)}}</div>
 					<div class="projected" style="text-align: left">{{data.opponent.team_total_proj_points}}</div>
 				</div>
 					<div class="shirt" style="float:right">
@@ -136,7 +141,7 @@ SC James Style
 			<div ng-repeat="player in data.myplayers">
 			<div class="player-card " ng-class="getPlayingClass(player.played_status)">
 				<div class="player-score">
-					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
 					<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
 				</div>
@@ -169,7 +174,7 @@ SC James Style
 			<div ng-repeat="player in data.opponent.player_list.field.players">
 			<div class="player-card player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'">
 				<div class="player-score-r">
-					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
 				</div>
 				<div class="player-name"><span ng-if="player.status=='inj'" class="player-status-inj">INJ</span>
@@ -206,7 +211,7 @@ SC James Style
 			<div ng-repeat="player in data.mybench">
 			<div class="player-card " ng-class="getPlayingClass(player.played_status)">
 				<div class="player-score">
-					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
 				</div>
 				<div class="player-name">{{player.fi}}. {{player.ln}} 
@@ -237,7 +242,7 @@ SC James Style
 			<div ng-repeat="player in data.opponent.player_list.bench.players">
 			<div class="player-card  player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'" >
 				<div class="player-score-r">
-					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
 				</div>
 				<div class="player-name"><span ng-if="player.status=='inj'" class="player-status-inj">INJ</span>

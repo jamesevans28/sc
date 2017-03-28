@@ -52,7 +52,7 @@ angular.module("supercoach")
 	 	$scope.data = {};
 	 	$.ajax({
 	        url: "http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/?",
-	        data:{tid:tid,round:1,csurl:"http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/"}
+	        data:{tid:tid,csurl:"http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/"}
 	    })
 	    .done  (function(data, textStatus, jqXHR)        
 	    { 
@@ -181,13 +181,44 @@ angular.module("supercoach")
 		return "not-played";
 	}
 
-	function getTotalLiveScore(players)
+
+	/**
+	 * Get the score to show at the top of the main view
+	 * This will also check to see if any player isnt playing, and if so, then pick up your lowest bench player
+	 */
+	function getTotalLiveScore(players, bench)
 	{
+
 		livescore = 0;
+		includeBenchPlayer = false;
 		for(var k in players)
 		{
-			livescore = livescore + parseInt(players[k].livepts);
+			points = players[k].livepts!=0?players[k].livepts:players[k].points;
+
+			livescore = livescore + parseInt(points);
+
+			if(points=='0' && players[k].played_status != 'pre') includeBenchPlayer = true;
 		}
+
+		if(includeBenchPlayer && typeof bench != 'undefined')
+		{
+			benchScore = 0;
+			for(var j in bench){
+				bpoints = bench[j].livepts!=0?bench[j].livepts:bench[j].points;
+				
+				if(bpoints != 0){
+					if(benchScore == 0) 
+						benchScore = bpoints;
+					else if(parseInt(bpoints) < benchScore)  
+						benchScore = bpoints;
+
+				} 
+			}
+
+			
+			livescore = livescore + benchScore;
+		}
+
 
 		return livescore;
 	}
@@ -219,9 +250,21 @@ angular.module("supercoach")
     }
 
 
+    /**
+     * used for the real game list, gets a summary of the top 5 players
+     */
     $scope.getTop5Scores = function(players)
     {
-    	if(players[0].team_played_status=='pre') return;
+    	var game_started=false;
+    	for(var l in players)
+    	{
+    		
+    		if(players[l].points > 0){
+    			game_started=true;
+    		}
+    	}
+
+    	if(players[0].team_played_status=='pre' && game_started == false ) return "Game not started";
 
     	if(players[0].team_played_status=='now') return "Game In Progress (" + $scope.getCurrentQuarter(players[0].team) + ")";
 
