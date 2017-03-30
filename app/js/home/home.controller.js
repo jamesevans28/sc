@@ -6,6 +6,7 @@ angular.module("supercoach")
 	
 	$scope.getPlayingClass = getPlayingClass;
 	$scope.getTotalLiveScore = getTotalLiveScore;
+	$scope.getPPM = getPPM;
 	$scope.getData = getData;
 	/**
 	 * Check if we have the php session cookie from the supercoach site!
@@ -191,11 +192,36 @@ angular.module("supercoach")
 
 		livescore = 0;
 		includeBenchPlayer = false;
+		ppm = 0;
+
 		for(var k in players)
 		{
 			points = players[k].livepts!=0?players[k].livepts:players[k].points;
 
 			livescore = livescore + parseInt(points);
+
+			/**
+			 * Calculate the PPM for this player
+			 */
+			if(players[k].played_status != 'post') ppm = ppm + (points/80);
+			if(players[k].played_status != 'now'){
+				player_team = players[k].team;
+				for (var k in $scope.data.fixture.games)
+		    	{
+		    		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
+		    			if($scope.data.fixture.games[k].period_status == 'Half time') minutes = 40;
+		    			else if($scope.data.fixture.games[k].period_status == 'Quarter time') minutes = 20;
+		    			else if($scope.data.fixture.games[k].period_status == '3Quarter time') minutes = 60;
+		    			else
+		    			{
+		    				minutes = ($scope.data.fixture.games[k].period-1)+($scope.data.fixture.games[k].period_seconds/60);
+		    			}
+		    		}
+		    	}
+				ppm = ppm + (points/minutes);
+			} 
+			$scope.ppm = ppm.toFixed(2);
+
 
 			if(points=='0' && players[k].played_status != 'pre') includeBenchPlayer = true;
 		}
@@ -221,6 +247,67 @@ angular.module("supercoach")
 
 
 		return livescore;
+	}
+
+	/**
+	 * Get PPM
+	 */
+	function getPPM(players,bench)
+	{
+		livescore = 0;
+		includeBenchPlayer = false;
+		ppm = 0;
+
+		for(var k in players)
+		{
+			points = players[k].livepts!=0?players[k].livepts:players[k].points;
+
+			/**
+			 * Calculate the PPM for this player
+			 */
+			if(players[k].played_status != 'post') ppm = ppm + (points/80);
+			if(players[k].played_status != 'now'){
+				player_team = players[k].team;
+				for (var k in $scope.data.fixture.games)
+		    	{
+		    		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
+		    			if($scope.data.fixture.games[k].period_status == 'Half time') minutes = 40;
+		    			else if($scope.data.fixture.games[k].period_status == 'Quarter time') minutes = 20;
+		    			else if($scope.data.fixture.games[k].period_status == '3Quarter time') minutes = 60;
+		    			else
+		    			{
+		    				minutes = ($scope.data.fixture.games[k].period-1)+($scope.data.fixture.games[k].period_seconds/60);
+		    			}
+		    		}
+		    	}
+				ppm = ppm + (points/minutes);
+			} 
+
+
+			if(points=='0' && players[k].played_status != 'pre') includeBenchPlayer = true;
+		}
+
+		if(includeBenchPlayer && typeof bench != 'undefined')
+		{
+			benchScore = 0;
+			for(var j in bench){
+				bpoints = bench[j].livepts!=0?bench[j].livepts:bench[j].points;
+				
+				if(bpoints != 0){
+					if(benchScore == 0) 
+						benchScore = bpoints;
+					else if(parseInt(bpoints) < benchScore)  
+						benchScore = bpoints;
+
+				} 
+			}
+
+			
+			livescore = livescore + benchScore;
+		}
+
+
+		return  ppm.toFixed(2);
 	}
 
 	 /**
@@ -296,6 +383,7 @@ angular.module("supercoach")
     	{
     		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
     			if($scope.data.fixture.games[k].period_status == 'Half time') return 'HT';
+    			if($scope.data.fixture.games[k].period_status == 'Quarter time') return 'QT';
     			else
     				return 'Q'+$scope.data.fixture.games[k].period;
     		}

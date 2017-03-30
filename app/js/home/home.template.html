@@ -100,6 +100,7 @@ SC James Style
 			<div class="team-total-score">
 				<div class="actual">{{getTotalLiveScore(data.myplayers, data.mybench)}}</div>
 				<div class="projected">{{data.team.team_total_proj_points}}</div>
+				<div class="projected" style="font-size: 0.9em">{{getPPM(data.myplayers, data.mybench)}} PPM</div>
 
 			</div>
 				<div class="shirt" style="float:left">
@@ -118,6 +119,7 @@ SC James Style
 				<div class="team-total-score" style="float:left">
 					<div class="actual" style="text-align: left">{{getTotalLiveScore(data.opponent.player_list.field.players, data.opponent.player_list.bench.players)}}</div>
 					<div class="projected" style="text-align: left">{{data.opponent.team_total_proj_points}}</div>
+					<div class="projected" style="font-size: 0.9em">{{getPPM(data.opponent.player_list.field.players, data.opponent.player_list.bench.players)}} PPM</div>
 				</div>
 					<div class="shirt" style="float:right">
 
@@ -177,6 +179,7 @@ SC James Style
 				<div class="player-score-r">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
+					<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
 				</div>
 				<div class="player-name">
 					<span ng-if="player.status=='inj'" class="player-status-inj">INJ</span>
@@ -216,6 +219,7 @@ SC James Style
 				<div class="player-score">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
+					<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
 				</div>
 				<div class="player-name">{{player.fi}}. {{player.ln}} 
 					<span ng-if="player.status=='inj'" class="player-status-inj">INJ</span>
@@ -249,6 +253,7 @@ SC James Style
 				<div class="player-score-r">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
+					<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
 				</div>
 				<div class="player-name">
 					<span ng-if="player.status=='inj'" class="player-status-inj">INJ</span>
