@@ -3,8 +3,9 @@
 
 //   $window.ga('create', 'UA-96202267-1', 'auto');
 
-//    $rootScope.$on('$stateChangeSuccess', function (event) {
+//    $rootScope.$on('$routeChangeSuccess', function (event) {
 //       $window.ga('send', 'pageview', $location.path());
+//       console.log("Route Change Success");
 //    });
 
 // });

@@ -6,6 +6,7 @@ angular.module("supercoach",['ngRoute','templates'])
    // Allow loading from our assets domain.  Notice the difference between * and **.
    'http://supercoach.heraldsun.com.au/**']);
  })
+
 .run(function ($rootScope, $window, $location) {
 
   $window.ga('create', 'UA-96202267-1', 'auto');

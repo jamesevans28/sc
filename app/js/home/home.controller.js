@@ -302,6 +302,39 @@ angular.module("supercoach")
     	}
     }
 	
-	  
+	/**
+	 * true or false if game has been selected or not
+	 */
+	 $scope.gameLocked = function(gametime)
+	 {
+	 
+	 	var date = new Date(gametime*1000);
+	 	var day_of_week = date.getDay();
+
+	 	if(day_of_week==4 || day_of_week==5) //thursday + friday
+	 	{
+	 		days_before = 1;
+	 	}else{
+	 		days_before = 2;
+	 	}
+
+	 	//get date that way {{days_before}} before the gametime
+	 	date.setDate(date.getDate()-days_before);
+
+	 	//change the time to 6:30pm
+	 	date.setHours(18,45,0,0);
+	 	now = new Date();
+	 	
+
+	 	if(date > now){
+	 		
+	 		return false;
+	 	}
+	 	else{
+	 		
+	 		return true;
+	 	}
+	 		
+	 }
 	
 })
