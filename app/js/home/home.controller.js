@@ -235,6 +235,7 @@ angular.module("supercoach")
 		livescore = 0;
 		includeBenchPlayer = false;
 		ppm = 0;
+		played_players = 0;
 
 		for(var k in players)
 		{
@@ -243,7 +244,10 @@ angular.module("supercoach")
 			/**
 			 * Calculate the PPM for this player
 			 */
-			if(players[k].played_status == 'post') ppm = ppm + (points/80);
+			if(players[k].played_status == 'post'){
+				ppm = ppm + (points/80);
+				played_players++;
+			} 
 			if(players[k].played_status == 'now'){
 				player_team = players[k].team;
 				for (var k in $scope.data.fixture.games)
@@ -259,6 +263,7 @@ angular.module("supercoach")
 		    		}
 		    	}
 				ppm = ppm + (points/minutes);
+				played_players++;
 			} 
 
 
@@ -285,7 +290,7 @@ angular.module("supercoach")
 		// }
 
 
-		return  ppm.toFixed(2);
+		return  (ppm/played_players).toFixed(2);
 	}
 
 	 /**
