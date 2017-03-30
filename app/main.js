@@ -456,11 +456,12 @@ angular.module("supercoach")
     	for (var k in $scope.data.fixture.games)
     	{
     		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
-    			return _.replace($scope.data.fixture.games[k].period_status," - ","\n") 
+    			
     			if($scope.data.fixture.games[k].period_status == 'Half time') return 'HT';
     			if($scope.data.fixture.games[k].period_status == 'Quarter time') return 'QT';
+    			if($scope.data.fixture.games[k].period_status == 'Three-quarter time') return '3QT';
     			else
-    				return 'Q'+$scope.data.fixture.games[k].period;
+    				return _.replace($scope.data.fixture.games[k].period_status," - ","\n") 
     		}
     	}
     }
