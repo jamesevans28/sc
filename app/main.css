@@ -103,6 +103,7 @@ body {
 .player-card .player-score-r .quarter {
   color: orange;
   padding-top: 2px;
+  font-size: 0.7em;
 }
 .player-card .player-name {
   font-size: 1.1em;
