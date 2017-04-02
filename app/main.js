@@ -289,7 +289,7 @@ angular.module("supercoach")
 		{
 			points = players[k].livepts!=0?players[k].livepts:players[k].points;
 
-			livescore = livescore + parseInt(points);
+			livescore = parseInt(livescore) + parseInt(points);
 
 
 			if(points=='0' && players[k].played_status != 'pre') includeBenchPlayer = true;
@@ -311,7 +311,7 @@ angular.module("supercoach")
 			}
 
 			
-			livescore = livescore + benchScore;
+			livescore = parseInt(livescore) + parseInt(benchScore);
 		}
 
 
