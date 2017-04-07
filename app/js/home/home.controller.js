@@ -45,7 +45,7 @@ angular.module("supercoach")
 	});
 
 	 getData();
-	
+	getTeamData();
 
 
 	 function getData(tid){
@@ -109,6 +109,53 @@ angular.module("supercoach")
 	 		}
 	 	}
 	 }
+
+	 function getTeamData()
+	 {
+	 	$http({
+					  method: 'GET',
+					  url: 'teams.php'
+					}).then(function successCallback(response) {
+					    $scope.teamData = response.data;
+					  }, function errorCallback(response) {
+					    // called asynchronously if an error occurs
+					    // or server returns response with an error status.
+					  });
+	 }
+
+	 $scope.getPlayerStatus = function(fn,ln)
+	 {
+	 	name = fn + " " + ln;
+	 	//console.log($scope.teamData);
+	 	if(typeof $scope.teamData == 'undefined') return "loading";
+	 	// console.log("Player: " + name);
+	 	for(var k in $scope.teamData)
+	 	{
+	 		for(var i in $scope.teamData[k].Team)
+	 		{
+	 			if($scope.teamData[k].Team[i] == name){
+	 				// console.log(" is playing");
+	 				return "playing";
+	 			} 
+	 		}
+	 		for(var i in $scope.teamData[k].Injuries)
+	 		{
+	 			if($scope.teamData[k].Team[i] == name){
+	 				// console.log(" is injured");
+	 				return "inj";
+	 			} 
+	 		}
+	 		for(var i in $scope.teamData[k].Emergency)
+	 		{
+	 			if($scope.teamData[k].Team[i] == name){
+	 				// console.log(" is emergency");
+	 				return "emerg";
+	 			} 
+	 		}
+	 	}
+	 	return "none";
+	 }
+
 
 
 	 $scope.getStatInfo = function(player)
