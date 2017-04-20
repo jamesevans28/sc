@@ -73,7 +73,10 @@ foreach($injury_html->find('table.injuries[style="width: 100%; margin-bottom: 20
 		// $p = trim($player->plaintext);
 		if(is_object($player)){
 			if($player->find('td[colspan=3]') != null) continue;
-			$injury['player'] = rtrim($player->find('td',0)->plaintext,'*');
+			$p = rtrim($player->find('td',0)->plaintext,'*');
+			$p = str_replace("&nbsp;","",$p);
+			$p = trim($p);
+			$injury['player'] = $p;
 			$injury['injury'] = $player->find('td',1)->plaintext;
 			$injury['duration'] = $player->find('td',2)->plaintext;
 

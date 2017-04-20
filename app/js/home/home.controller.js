@@ -126,32 +126,43 @@ angular.module("supercoach")
 	 $scope.getPlayerStatus = function(fn,ln)
 	 {
 	 	name = fn + " " + ln;
+	 	if(name == "Patrick Ryder") name = "Paddy Ryder";
+
+	 	//console.log(name);
 	 	//console.log($scope.teamData);
 	 	if(typeof $scope.teamData == 'undefined') return "loading";
 	 	// console.log("Player: " + name);
+	 	// 
+	 	// 
 	 	for(var k in $scope.teamData)
 	 	{
-	 		for(var i in $scope.teamData[k].Team)
-	 		{
-	 			if($scope.teamData[k].Team[i] == name){
-	 				// console.log(" is playing");
-	 				return "playing";
-	 			} 
+	 		if(!_.isUndefined($scope.teamData[k].Team)){
+	 			for(var i in $scope.teamData[k].Team)
+		 		{
+		 			if($scope.teamData[k].Team[i] == name){
+		 				// console.log(" is playing");
+		 				return "playing";
+		 			} 
+		 		}
 	 		}
+	 		
 	 		for(var i in $scope.teamData[k].Injuries)
 	 		{
-	 			if($scope.teamData[k].Team[i] == name){
+	 			if($scope.teamData[k].Injuries[i].player == name){
 	 				// console.log(" is injured");
 	 				return "inj";
 	 			} 
 	 		}
-	 		for(var i in $scope.teamData[k].Emergency)
-	 		{
-	 			if($scope.teamData[k].Team[i] == name){
-	 				// console.log(" is emergency");
-	 				return "emerg";
-	 			} 
+	 		if(!_.isUndefined($scope.teamData[k].Emergency)){
+	 			for(var i in $scope.teamData[k].Emergency)
+		 		{
+		 			if($scope.teamData[k].Team[i] == name){
+		 				// console.log(" is emergency");
+		 				return "emerg";
+		 			} 
+		 		}
 	 		}
+	 		
 	 	}
 	 	return "none";
 	 }
