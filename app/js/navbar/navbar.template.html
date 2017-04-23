@@ -1,0 +1,83 @@
+<div class="header">
+<div style="float:left" ng-click="toggleSC()"><i class="fa fa-caret-down" aria-hidden="true"></i>League</div>
+<div style="float:right" ng-click="toggleAFL()">AFL<i class="fa fa-caret-down" aria-hidden="true"></i></div>
+<i ng-click="getData(0,true)" ng-show="refreshing!=true" class="fa fa-refresh fa-3x" aria-hidden="true"></i>
+<i ng-show="refreshing==true" class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+</div>
+
+<div id="sc-menu" style="display:none; clear:left">
+<!-- GAMES IN MY SC LEAGUE -->
+<div class="league" style="clear:left">
+	<div class="league-game" ng-repeat="game in leaguegames"  ng-click="getData(game.team_1.team_id, true); toggleSC();gotoScGame();">
+
+		<div class="league-game-team">
+			<div class="league-game-score">{{game.team_1.points}}</div>
+			<div class="league-game-details">
+				<div class="logo">
+					<div class="shirt">
+						<div class="shorts"></div>
+						<div class="shirt-jumper"></div>
+						<div class="pattern"></div>
+					</div>
+				</div>
+				<div class="name">{{game.team_1.team_name}}</div>
+				<div class="remaining">{{game.team_1.yet_to_play}} left | {{game.team_1.in_play}} in play</div>
+			</div>
+		</div>
+
+		<div class="league-game-team" style="margin-top: 1px;">
+			<div class="league-game-score">{{game.team_2.points}}</div>
+			<div class="league-game-details">
+				<div class="logo">
+					<div class="shirt">
+						<div class="shorts"></div>
+						<div class="shirt-jumper"></div>
+						<div class="pattern"></div>
+					</div>
+				</div>
+				<div class="name">{{game.team_2.team_name}}</div>
+				<div class="remaining">{{game.team_2.yet_to_play}} left | {{game.team_2.in_play}} in play</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+</div>
+
+<div id="afl-menu" style="display:none; clear:left">
+<!-- AFL GAMES -->
+<div class="league" style="clear:left">
+	<div class="league-game" ng-repeat="game in aflgames"  ng-click="gotoGame(game.id);toggleAFL();">
+
+		<div class="league-game-team">
+			<div class="league-game-score">{{game.team1_score}}</div>
+			<div class="league-game-details">
+				<div class="logo">
+					<div class="teamlogo teamlogo-{{game.team1_abbrev | lowercase}}">
+						
+					</div>
+				</div>
+				<div class="name">{{game.team1_name}}</div>
+				<div class="remaining">{{getTop5Scores(game.team1_players.players)}}</div>
+			</div>
+		</div>
+
+		<div class="league-game-team" style="margin-top: 1px;">
+			<div class="league-game-score">{{game.team2_score}}</div>
+			<div class="league-game-details">
+				<div class="logo">
+					<div class="teamlogo teamlogo-{{game.team2_abbrev | lowercase}}">
+						
+					</div>
+				</div>
+				<div class="name">{{game.team2_name}}</div>
+				<div class="remaining">{{getTop5Scores(game.team2_players.players)}}</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+</div>
+

@@ -1,0 +1,55 @@
+<div class="player-card " ng-class="[getPlayingClass(player.played_status, ha),ha=='away' ? 'player-card-r' : '']">
+	<!-- score -->
+	<div ng-class="ha=='away'?'player-score-r':'player-score'">
+		<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+		<div class="projected-score">{{player.proj_points}}</div>
+		<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
+	</div>
+	<!-- name -->
+	<div class="player-name"><span ng-if="ha=='home'">{{player.fi}}. {{player.ln}} </span>
+		<span ng-if="getPlayerSelection(player.fn,player.ln)=='inj'" class="player-status-inj">INJ</span>
+		<span ng-if="getPlayerSelection(player.fn,player.ln)=='none' && gameLocked(player.kickoff_time)==true" class="player-status-inj">OUT</span>
+		<span ng-if="getPlayerSelection(player.fn,player.ln)=='emerg'" class="player-status-inj">E</span>
+		<span ng-if="getPlayerSelection(player.fn,player.ln)=='playing'" class="player-status-playing"><i class="fa fa-check" aria-hidden="true"></i></span><span ng-if="ha=='away'"> {{player.fi}}. {{player.ln}}</span>
+	<span ng-if="getPlayerSelection(player.fn,player.ln)=='loading'" class="player-status-playing"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
+	</div>
+	
+	<!-- game state -->
+	<div class="game-info" ng-show="player.played_status=='pre'">
+		<div class="game-time">{{player.match_status}}</div>
+		<div class="opposition">v {{player.opp}}</div>
+	</div>
+
+	<!-- stats -->
+	<div class="stat-info">
+		<div ng-class="ha=='away'?'align-right':''" ng-bind-html="getStatInfo(player)"></div>
+	</div>
+
+</div>
+
+
+
+
+<!-- <div class="player-card player-card-r" ng-class="" ng-class="getPlayingClass(player.played_status, ha)">
+				<div class="player-score-r">
+					<div ng-class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
+					<div class="projected-score">{{player.proj_points}}</div>
+					<div class="quarter" ng-if="player.match_status=='In Play'">{{getCurrentQuarter(player.team)}}</div>
+				</div>
+				<div class="player-name">
+					<span ng-if="getPlayerStatus(player.fn,player.ln)=='inj'" class="player-status-inj">INJ</span>
+					<span ng-if="getPlayerStatus(player.fn,player.ln)=='none' && gameLocked(player.kickoff_time)==true" class="player-status-inj">OUT</span>
+					<span ng-if="getPlayerStatus(player.fn,player.ln)=='emerg'" class="player-status-inj">E</span>
+					<span ng-if="getPlayerStatus(player.fn,player.ln)=='playing'" class="player-status-playing"><i class="fa fa-check" aria-hidden="true"></i></span> {{player.fi}}. {{player.ln}}</div>
+				<span ng-if="getPlayerStatus(player.fn,player.ln)=='loading'" class="player-status-playing"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
+				
+				<div class="game-info" ng-show="player.played_status=='pre'">
+					<div class="game-time">{{player.match_status}}</div>
+					<div class="opposition">v {{player.opp}}</div>
+				</div>
+
+				<div class="stat-info">
+					<div style="text-align: right" ng-bind-html="getStatInfo(player)"></div>
+				</div>
+
+			</div> -->

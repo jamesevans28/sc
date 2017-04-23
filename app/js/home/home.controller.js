@@ -1,87 +1,39 @@
 angular.module("supercoach")
 
-.controller('HomeController', function($scope, $http, $timeout, $window, $sce){
+.controller('HomeController', function($scope, $http, $timeout, $window, $sce, ScService){
 	console.log("This is the home controller");
 	var self = this;
 	
-	$scope.getPlayingClass = getPlayingClass;
+	// $scope.getPlayingClass = getPlayingClass;
 	$scope.getTotalLiveScore = getTotalLiveScore;
 	$scope.getPPM = getPPM;
-	$scope.getData = getData;
+	// $scope.getData = getData;
+	
 	/**
-	 * Check if we have the php session cookie from the supercoach site!
+	 * Load Data
 	 */
-	if(readCookie("phpsessionid") == null){
-		$window.location.href = '/#!/getcookie';
-	}
+	$scope.$watch(function(){ return ScService.getDataValue(); }, function(data) {
 
-	if(readCookie("phpsessionid").length != 32){
-		$window.location.href = '/#!/getcookie';
-	}
+	    console.log("New Data", data);
+	    $scope.data = data;
+	   // $scope.controllerData = data;
+	  }, true);
 
-
-	$scope.toggleMenu = function()
-	{
-		if($("#menu").is(":visible") )
-			$("#menu").slideUp("fast");
-		else
-			$("#menu").slideDown("fast");
-	}
 
 
 
 	//var url = "http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/";
 	
-	 $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-	    console.log(options);
-	    if (options.url.match(/^http?:/)) {
-	        // options.headers['X-Proxy-URL'] = options.url;
-	         jqXHR.setRequestHeader('X-Proxy-URL', options.url);
-	        // jqXHR.setRequestHeader('phpsesh', "d8491ffd050fa19e2690cf57d05ca6fb");
-	         jqXHR.setRequestHeader('phpsesh', readCookie("phpsessionid"));
-	       
-	        options.url = '/proxy.php';
-	    }
-	});
+	
 
-	 getData();
-	getTeamData();
+	//  getData();
+	// getTeamData();
 
 
-	 function getData(tid){
-	 	$scope.refreshing=true;
-	 	$scope.data = {};
-	 	$.ajax({
-	        url: "http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/?",
-	        data:{tid:tid,csurl:"http://supercoach.heraldsun.com.au/afl/draft/service/match_centre/update/"}
-	    })
-	    .done  (function(data, textStatus, jqXHR)        
-	    { 
-	    	console.log(data);
+	 
 
-	    	if(typeof data.team == 'undefined') {
-	    		alert("Code is invalid. Please try re enter");
-	    		$window.location.href = '/#!/getcookie';
-	    	}
-	    	$timeout(function () {
-	    		$scope.data = data;
-		        $scope.data.myplayers =  data.team.player_list.field.players
-		        $scope.data.mybench =  data.team.player_list.bench.players
-		        $scope.data.opponent = data.opponent;
-		        console.log(data.opponent);
-		        updateStats();
-		        $scope.refreshing=false;
+	 
 
-		    }, 0);
-
-	    	//getOppositionData(data.opponent.id);
-	    	
-	    	
-	    })
-	    .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
-	    .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     {  });
-	    
-	 }
 
 	 //update stats
 	 function updateStats()
@@ -112,60 +64,18 @@ angular.module("supercoach")
 
 	 function getTeamData()
 	 {
-	 	$http({
-					  method: 'GET',
-					  url: 'teams.php'
-					}).then(function successCallback(response) {
-					    $scope.teamData = response.data;
-					  }, function errorCallback(response) {
-					    // called asynchronously if an error occurs
-					    // or server returns response with an error status.
-					  });
+		 	$http({
+						  method: 'GET',
+						  url: 'teams.php'
+						}).then(function successCallback(response) {
+						    $scope.teamData = response.data;
+						  }, function errorCallback(response) {
+						    // called asynchronously if an error occurs
+						    // or server returns response with an error status.
+						  });
 	 }
 
-	 $scope.getPlayerStatus = function(fn,ln)
-	 {
-	 	name = fn + " " + ln;
-	 	if(name == "Patrick Ryder") name = "Paddy Ryder";
-
-	 	//console.log(name);
-	 	//console.log($scope.teamData);
-	 	if(typeof $scope.teamData == 'undefined') return "loading";
-	 	// console.log("Player: " + name);
-	 	// 
-	 	// 
-	 	for(var k in $scope.teamData)
-	 	{
-	 		if(!_.isUndefined($scope.teamData[k].Team)){
-	 			for(var i in $scope.teamData[k].Team)
-		 		{
-		 			if($scope.teamData[k].Team[i] == name){
-		 				// console.log(" is playing");
-		 				return "playing";
-		 			} 
-		 		}
-	 		}
-	 		
-	 		for(var i in $scope.teamData[k].Injuries)
-	 		{
-	 			if($scope.teamData[k].Injuries[i].player == name){
-	 				// console.log(" is injured");
-	 				return "inj";
-	 			} 
-	 		}
-	 		if(!_.isUndefined($scope.teamData[k].Emergency)){
-	 			for(var i in $scope.teamData[k].Emergency)
-		 		{
-		 			if($scope.teamData[k].Team[i] == name){
-		 				// console.log(" is emergency");
-		 				return "emerg";
-		 			} 
-		 		}
-	 		}
-	 		
-	 	}
-	 	return "none";
-	 }
+	
 
 
 
@@ -229,16 +139,7 @@ angular.module("supercoach")
 	 	return $sce.trustAsHtml(s);
 	 }
 
-	/**
-	 * REturn the class that we need to apply for if the player is playing or not
-	 */
-	function getPlayingClass(status)
-	{
-		if(status == "now") return "playing";
-		if(status == "post") return "finished";
 
-		return "not-played";
-	}
 
 
 	/**
@@ -308,15 +209,15 @@ angular.module("supercoach")
 			} 
 			if(players[k].played_status == 'now'){
 				player_team = players[k].team;
-				for (var k in $scope.data.fixture.games)
+				for (var k in $scope.data.aflgames)
 		    	{
-		    		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
-		    			if($scope.data.fixture.games[k].period_status == 'Half time') minutes = 40;
-		    			else if($scope.data.fixture.games[k].period_status == 'Quarter time') minutes = 20;
-		    			else if($scope.data.fixture.games[k].period_status == '3Quarter time') minutes = 60;
+		    		if($scope.data.aflgames[k].team1_abbrev == player_team || $scope.data.aflgames[k].team2_abbrev == player_team) {
+		    			if($scope.data.aflgames[k].period_status == 'Half time') minutes = 40;
+		    			else if($scope.data.aflgames[k].period_status == 'Quarter time') minutes = 20;
+		    			else if($scope.data.aflgames[k].period_status == '3Quarter time') minutes = 60;
 		    			else
 		    			{
-		    				minutes = (($scope.data.fixture.games[k].period-1)*20)+($scope.data.fixture.games[k].period_seconds/60);
+		    				minutes = (($scope.data.aflgames[k].period-1)*20)+($scope.data.aflgames[k].period_seconds/60);
 		    			}
 		    		}
 		    	}
@@ -351,31 +252,7 @@ angular.module("supercoach")
 		return  (ppm/played_players).toFixed(2);
 	}
 
-	 /**
-	  * Cookie functions
-	  * 
-	  */
-	 function createCookie(name, value, days) {
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                var expires = "; expires=" + date.toGMTString();
-            }
-            else var expires = "";               
-
-            document.cookie = name + "=" + value + expires + "; path=/";
-        }
-
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
+	
 
 
     /**
@@ -418,20 +295,7 @@ angular.module("supercoach")
     }
 
 
-    $scope.getCurrentQuarter = function(player_team)
-    {
-    	for (var k in $scope.data.fixture.games)
-    	{
-    		if($scope.data.fixture.games[k].team1_abbrev == player_team || $scope.data.fixture.games[k].team2_abbrev == player_team) {
-    			
-    			if($scope.data.fixture.games[k].period_status == 'Half time') return 'HT';
-    			if($scope.data.fixture.games[k].period_status == 'Quarter time') return 'QT';
-    			if($scope.data.fixture.games[k].period_status == 'Three-quarter time') return '3QT';
-    			else
-    				return _.replace($scope.data.fixture.games[k].period_status," - ","\n") 
-    		}
-    	}
-    }
+   
 	
 	/**
 	 * true or false if game has been selected or not
@@ -467,5 +331,8 @@ angular.module("supercoach")
 	 	}
 	 		
 	 }
+
+
+	 
 	
 })

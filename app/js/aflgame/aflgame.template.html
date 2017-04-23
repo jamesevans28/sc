@@ -1,0 +1,26 @@
+<div class="aflgame-header">
+	<div class="team-score">
+		<div class="team-score-number">{{game.team1_score}}</div>
+		<div class="team-score-logo teamlogo teamlogo-{{game.team1_abbrev | lowercase}}"></div>
+		<div class="team-score-teamname">{{game.team1_name}}</div>
+	</div>
+	<div class="team-score">
+		<div class="team-score-number">{{game.team2_score}}</div>
+		<div class="team-score-logo teamlogo teamlogo-{{game.team2_abbrev | lowercase}}"></div>
+		<div class="team-score-teamname">{{game.team2_name}}</div>
+	</div>
+	<div class="team-score-footer">
+		<div ng-if="game.match_status=='Complete'">Match Complete. {{ parseInt(game.team2_score) > parseInt(game.team1_score) ? game.team2_name : game.team1_name }} by {{ Math.abs(game.team2_score - game.team1_score) }}</div>
+		<div style="text-align: right;" ng-if="game.game_status=='pre'">{{game.date}}</div>
+	</div>
+</div>
+
+<table class="aflgametable">
+	<tr ng-repeat="player in players | orderBy:'-score'">
+		<td><div class="teamlogo teamlogo-sm teamlogo-{{player.team | lowercase}}"></div></td>
+		<td>{{player.player}}</td>
+		<td style="width:13%">{{player.score}}<span class="time-since" ng-class="formatTimestamp(player.timestamp)>5?'time-since-red':''">{{formatTimestamp(player.timestamp)}}<span ng-if="formatTimestamp(player.timestamp)">M</span></span></td>
+	</tr>
+</table>
+
+<!-- -Math.min(parseInt(game.team2_score),parseInt(game.team1_score)) -->

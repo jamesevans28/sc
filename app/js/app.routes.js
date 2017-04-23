@@ -7,10 +7,14 @@ angular.module("supercoach")
 				templateUrl : 'app/js/home/home.template.html',
 				controller  : 'HomeController as ctrl'
 			})
+			.when('/aflgame/:gameid', {
+				templateUrl : 'app/js/aflgame/aflgame.template.html',
+				controller  : 'AflGameController as ctrl'
+			})
 			.when('/getcookie', {
 				templateUrl : 'app/js/cookie/cookie.template.html',
 				controller  : 'CookieController as ctrl'
-			});;
+			});
 
 			// // route for the about page
 			// .when('/about', {

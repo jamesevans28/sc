@@ -1,96 +1,5 @@
 <div id="parent">
-<div class="header">
-<div style="float:left" ng-click="toggleMenu()"><i class="fa fa-bars fa-3x" aria-hidden="true"></i></div>
 
-SC James Style
-<i ng-click="getData()" ng-show="refreshing==false" style="float:right" class="fa fa-refresh fa-3x" aria-hidden="true"></i>
-<i ng-show="refreshing==true" style="float:right" class="fa fa-refresh fa-spin fa-3x fa-fw"></i></div>
-
-<!-- <div class="league">
-	
-
-<div class="league-team-name" ng-repeat="game in data.schedule.games" style="width:{{93/data.schedule.games.length}}%" ng-click="getData(game.team_1.team_id)">
-		{{game.team_1.team_name}}<br>v<br>
-		{{game.team_2.team_name}}
-		</div></div> -->
-<div id="menu" style="display:none; clear:left">
-
-
-<!-- GAMES IN MY SC LEAGUE -->
-<div class="league" style="clear:left">
-	<div class="league-game" ng-repeat="game in data.schedule.games"  ng-click="getData(game.team_1.team_id); toggleMenu();">
-
-		<div class="league-game-team">
-			<div class="league-game-score">{{game.team_1.points}}</div>
-			<div class="league-game-details">
-				<div class="logo">
-					<div class="shirt">
-						<div class="shorts"></div>
-						<div class="shirt-jumper"></div>
-						<div class="pattern"></div>
-					</div>
-				</div>
-				<div class="name">{{game.team_1.team_name}}</div>
-				<div class="remaining">{{game.team_1.yet_to_play}} left | {{game.team_1.in_play}} in play</div>
-			</div>
-		</div>
-
-		<div class="league-game-team" style="margin-top: 1px;">
-			<div class="league-game-score">{{game.team_2.points}}</div>
-			<div class="league-game-details">
-				<div class="logo">
-					<div class="shirt">
-						<div class="shorts"></div>
-						<div class="shirt-jumper"></div>
-						<div class="pattern"></div>
-					</div>
-				</div>
-				<div class="name">{{game.team_2.team_name}}</div>
-				<div class="remaining">{{game.team_2.yet_to_play}} left | {{game.team_2.in_play}} in play</div>
-			</div>
-		</div>
-
-
-	</div>
-</div>
-
-
-<!-- AFL GAMES -->
-<div class="league" style="clear:left">
-	<div class="league-game" ng-repeat="game in data.fixture.games"  ng-click="toggleMenu();">
-
-		<div class="league-game-team">
-			<div class="league-game-score">{{game.team1_score}}</div>
-			<div class="league-game-details">
-				<div class="logo">
-					<div class="teamlogo teamlogo-{{game.team1_abbrev | lowercase}}">
-						
-					</div>
-				</div>
-				<div class="name">{{game.team1_name}}</div>
-				<div class="remaining">{{getTop5Scores(game.team1_players.players)}}</div>
-			</div>
-		</div>
-
-		<div class="league-game-team" style="margin-top: 1px;">
-			<div class="league-game-score">{{game.team2_score}}</div>
-			<div class="league-game-details">
-				<div class="logo">
-					<div class="teamlogo teamlogo-{{game.team2_abbrev | lowercase}}">
-						
-					</div>
-				</div>
-				<div class="name">{{game.team2_name}}</div>
-				<div class="remaining">{{getTop5Scores(game.team2_players.players)}}</div>
-			</div>
-		</div>
-
-
-	</div>
-</div>
-
-
-</div>
 
 <!-- TEAM TOTALS BANNER -->
 <table class="team-totals">
@@ -98,9 +7,9 @@ SC James Style
 		<td>
 			<div class="team-card">
 			<div class="team-total-score">
-				<div class="actual">{{getTotalLiveScore(data.myplayers, data.mybench)}}</div>
+				<div class="actual">{{getTotalLiveScore(data.team.player_list.field.players, data.team.player_list.bench.players)}}</div>
 				<div class="projected">{{data.team.team_total_proj_points}}</div>
-				<div class="projected" style="font-size: 0.9em">{{getPPM(data.myplayers, data.mybench)}} PPM</div>
+				<div class="projected" style="font-size: 0.9em">{{getPPM(data.team.player_list.field.players, data.team.player_list.bench.players)}} PPM</div>
 
 			</div>
 				<div class="shirt" style="float:left">
@@ -140,8 +49,9 @@ SC James Style
 
 		<!-- LEFT -->
 		<td class="table-players">
-			<div ng-repeat="player in data.myplayers">
-			<div class="player-card " ng-class="getPlayingClass(player.played_status)">
+			<div ng-repeat="player in data.team.player_list.field.players">
+			<div player="player"></div>
+			<!-- <div class="player-card " ng-class="getPlayingClass(player.played_status)">
 				<div class="player-score">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
@@ -165,18 +75,19 @@ SC James Style
 				
 				</div>
 
-			</div>
+			</div> -->
 		</div>
 		</td>
 	<!-- MIDDLE -->
 		<td class="table-position">
-			<div class="position-label" ng-repeat="player in data.myplayers">{{player.pos}}</div>
+			<div class="position-label" ng-repeat="player in data.team.player_list.field.players">{{player.pos}}</div>
 		</td>
 
 	<!-- RIGHT -->
 		<td class="table-players">
 			<div ng-repeat="player in data.opponent.player_list.field.players">
-			<div class="player-card player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'">
+			<div player="player" ha='away'></div>
+			<!-- <div class="player-card player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'">
 				<div class="player-score-r">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
@@ -197,7 +108,7 @@ SC James Style
 					<div style="text-align: right" ng-bind-html="getStatInfo(player)"></div>
 				</div>
 
-			</div>
+			</div> -->
 		</div>
 		</td>
 	</tr>
@@ -215,8 +126,9 @@ SC James Style
 <table class="players-table">
 	<tr>
 		<td class="table-players">
-			<div ng-repeat="player in data.mybench">
-			<div class="player-card " ng-class="getPlayingClass(player.played_status)">
+			<div ng-repeat="player in data.team.player_list.bench.players">
+			<div player="player"></div>
+			<!-- <div class="player-card " ng-class="getPlayingClass(player.played_status)">
 				<div class="player-score">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
@@ -242,17 +154,18 @@ SC James Style
 				
 				</div>
 
-			</div>
+			</div> -->
 		</div>
 		</td>
 
 		<td class="table-position">
-			<div class="position-label" ng-repeat="player in data.mybench">BEN</div>
+			<div class="position-label" ng-repeat="player in data.team.player_list.bench.players">BEN</div>
 		</td>
 
 		<td class="table-players">
 			<div ng-repeat="player in data.opponent.player_list.bench.players">
-			<div class="player-card  player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'" >
+			<div player="player" ha="away"></div>
+			<!-- <div class="player-card  player-card-r" ng-class="getPlayingClass(player.played_status)+'-r'" >
 				<div class="player-score-r">
 					<div class="actual-score"><span ng-if="player.played_status!='pre'">{{player.livepts!=0?player.livepts:player.points}}</span><span ng-if="player.played_status=='pre'">--</span></div>
 					<div class="projected-score">{{player.proj_points}}</div>
@@ -273,7 +186,7 @@ SC James Style
 					<div ng-bind-html="getStatInfo(player)"></div>
 				</div>
 
-			</div>
+			</div> -->
 		</div>
 		</td>
 	</tr>
