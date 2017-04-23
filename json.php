@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  * Getting a game
  */
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $game_file = "games/" . $_GET["game_id"] . ".json";
+    $game_file = dirname(__FILE__) ."/games/" . $_GET["game_id"] . ".json";
     if(file_exists($game_file))
     {
         //echo "file exists";
