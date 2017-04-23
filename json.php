@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = (array)$data;
         if(is_null($data['player'])) continue;
 
-    $game_file = "games/" . $data["game_id"] . ".json";
+    $game_file = dirname(__FILE__) ."/games/" . $data["game_id"] . ".json";
+    echo $game_file;
     $player = $data['player'];
     $score = $data['score'];
     $team = $data['team'];
