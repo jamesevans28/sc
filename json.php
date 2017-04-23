@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //load the file if exists
     if(file_exists($game_file))
     {
-    	echo "file exists";
+    	echo "\nfile exists";
     	$json = file_get_contents($game_file);
     	$json = (array) json_decode($json, true);
     }else{
-    	echo "creating new file";
+    	echo "\ncreating new file";
     	$json = [];
     }
-    var_dump($json);
+    //var_dump($json);
     //check if the player is already in the file
     $index = 0;
     foreach($json as $key=>$value)
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
 
     file_put_contents($game_file, json_encode($json, JSON_NUMERIC_CHECK));
-
+    echo "Finished uploading";
     }
 }
 
